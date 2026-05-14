@@ -1,0 +1,164 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block title %}Portfolio | Network & Security Analyst{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section id="about" class="d-flex align-items-center min-vh-100 pt-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 order-2 order-lg-1 fade-in-up">
+                <h4 class="text-success mb-3">Hello, I'm</h4>
+                <h1 class="display-3 fw-bold mb-3">{{ profile.name|default:"Your Name" }}</h1>
+                <h2 class="text-muted mb-4">{{ profile.title|default:"Cyber Security & Django Developer" }}</h2>
+                <p class="lead mb-4">{{ profile.bio|default:"Secure networks, build robust applications, and penetrate test systems to make them safer." }}</p>
+                
+                <div class="d-flex gap-3">
+                    <a href="#contact" class="btn btn-cyber">Hire Me</a>
+                    <a href="{{ profile.resume.url }}" target="_blank" class="btn btn-outline-dark">Download CV</a>
+                </div>
+                
+                <!-- Social Icons -->
+                <div class="mt-5">
+                    <a href="{{ profile.github }}" class="fs-4 me-3 text-dark icon-link-hover"  style="--bs-link-hover-color-rgb: 25, 135, 84;" ><i class="bi bi-github"></i></a>
+                    <a href="{{ profile.linkedin }}" class="fs-4 me-3 text-primary icon-link-hover"  style="--bs-link-hover-color-rgb: 25, 135, 84;" ><i class="bi bi-linkedin"></i></a>
+                    <a href="mailto:{{ profile.email }}" class="fs-4 text-danger icon-link-hover"  style="--bs-link-hover-color-rgb: 25, 135, 84;" ><i class="bi bi-envelope"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-6 order-1 order-lg-2 text-center fade-in-up">
+                <!-- Placeholder for Profile Image -->
+                {% if profile.profile_image %}
+                    <img src="{{ profile.profile_image.url }}" alt="Profile" class="img-fluid rounded-circle shadow-lg" style="max-width: 400px; border: 5px solid var(--primary-color);">
+                {% else %}
+                    <img src="https://via.placeholder.com/400" alt="Profile" class="img-fluid rounded-circle shadow-lg">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section id="skills" class="bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5 fade-in-up">Technical Arsenal</h2>
+        <div class="row g-4">
+            {% for skill in skills %}
+            <div class="col-md-3 col-sm-6 fade-in-up">
+                <div class="skill-card h-100">
+                    <i class="{{ skill.icon_class }} fs-1 text-success mb-3"></i>
+                    <h5>{{ skill.name }}</h5>
+                    <small class="text-muted">{{ skill.category }}</small>
+                </div>
+            </div>
+            {% empty %}
+            <div class="text-center text-muted">No skills added yet. Add them in Admin Panel.</div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects">
+    <div class="container">
+        <h2 class="text-center mb-5 fade-in-up">Featured Projects</h2>
+        <div class="row g-4">
+            {% for project in projects %}
+            <div class="col-md-6 col-lg-4 fade-in-up">
+                <div class="project-card h-100">
+                    <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                    <div class="project-info">
+                        <h5>{{ project.title }}</h5>
+                        <p class="small text-success">{{ project.tech_stack }}</p>
+                        <a href="{{ project.link }}" target="_blank" class="btn btn-sm btn-outline-light mt-2">View Live</a>
+                        <a href="{{ project.github_link }}" target="_blank" class="btn btn-sm btn-outline-light mt-2"><i class="bi bi-github"></i> Code</a>
+                    </div>
+                </div>
+            </div>            
+            {% empty %}
+            <div class="text-center text-muted">No projects added yet.</div>
+            {% endfor %}
+        </div>
+        <a href="{% url 'projects' %}" class="btn btn-outline-dark">View More..</a>
+    </div>
+</section>
+
+<!-- Experience & Certifications -->
+<section id="experience" class="bg-light">
+    <div class="container">
+        <div class="row">
+            <!-- Experience -->
+            <div class="col-lg-6 mb-5 mb-lg-0 fade-in-up">
+                <h3 class="mb-4">Experience</h3>
+                {% for exp in experiences %}
+                <div class="card border-0 shadow-sm mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-2">
+                            <h5 class="card-title mb-0">{{ exp.role }}</h5>
+                            <small class="text-muted">{{ exp.start_date|date:"M Y" }} - {% if exp.end_date %}{{ exp.end_date|date:"M Y" }}{% else %}Present{% endif %}</small>
+                        </div>
+                        <h6 class="text-success">{{ exp.company }}</h6>
+                        <ul class="card-text small">
+                            {% for item in exp.description_list %}
+                            <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                        <p class="">{{ exp.from_link }}<a href="{{ exp.about_company }}" target="_blank" style={color:blue;}> {{ exp.company }} </a></p>
+                    </div>
+                </div>
+                {% empty %}
+                <p>No experience added.</p>
+                {% endfor %}
+            </div>
+
+            <!-- Certifications -->
+            <div class="col-lg-6 fade-in-up">
+                <h3 class="mb-4">Certifications & Badges</h3>
+                <div class="list-group">
+                    {% for cert in certifications %}
+                    <a href="{{ cert.link }}" target="_blank" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1">{{ cert.title }}</h6>
+                            <small class="text-muted">{{ cert.issuer }}</small>
+                        </div>
+                        <span class="badge bg-success rounded-pill">{{ cert.date_obtained.year }}</span>
+                    </a>
+                    {% empty %}
+                    <p>No certifications added.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center mb-5 fade-in-up">
+                <h2>Get In Touch</h2>
+                <p class="lead">Have a project in mind or want to discuss security? Send me a message.</p>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center fade-in-up">
+            <div class="col-lg-6">
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-success">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+                
+                <form method="POST" class="card p-4 shadow-sm">
+                    {% csrf_token %}
+                    {{ contact_form.as_p }}
+                    <button type="submit" class="btn btn-cyber w-100">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
