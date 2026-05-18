@@ -1,0 +1,149 @@
+/* --- CSS Variables for Dark/Light Mode --- */
+:root {
+    --primary-color: #00ff88; /* Cyber Green */
+    --secondary-color: #0b0c10;
+    --link-color: hsl(205, 91%, 44%);
+    --bg-color: #ffffff;
+    --card-bg: #f8f9fa;
+    --text-color: #333333;
+    --text-light: #666666;
+    --transition-speed: 0.3s;
+}
+
+[data-theme="dark"] {
+    --primary-color: #00ff88;
+    --secondary-color: #1f2833;
+    --bg-color: #121212;
+    --card-bg: #1e1e1e;
+    --text-color: #e0e0e0;
+    --text-light: #aaaaaa;
+}
+
+/* --- Global Styles --- */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--secondary-color);
+    font-weight: 700;
+}
+
+a {
+    text-decoration: none;
+    color: blue;
+    transition: var(--transition-speed);
+}
+
+/* --- Navbar --- */
+.navbar {
+    backdrop-filter: blur(10px);
+    background-color: rgba(var(--bg-color), 0.9);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 1rem 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+/* --- Animated Buttons --- */
+.btn-cyber {
+    background: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 10px 25px;
+    font-weight: bold;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-cyber:hover {
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    box-shadow: 0 0 20px var(--primary-color);
+}
+
+/* --- Sections --- */
+section {
+    padding: 80px 0;
+}
+
+/* --- Skills Card --- */
+.skill-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(0,0,0,0.1);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.skill-card:hover {
+    transform: translateY(-10px);
+    border-color: var(--primary-color);
+}
+
+/* --- Project Grid --- */
+.project-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.project-card img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.5s ease;
+}
+
+.project-card:hover img {
+    transform: scale(1.1);
+}
+
+.project-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 20px;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.project-card:hover .project-info {
+    transform: translateY(0);
+}
+
+/* --- Animations (Fade In Up) --- */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- Dark Mode Toggle Switch --- */
+.theme-switch-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.theme-toggle {
+    cursor: pointer;
+    font-size: 1.5rem;
+}
